@@ -1,4 +1,4 @@
-@echo on
+@echo off
 F:
 cd  F:\Info\Python\vendors
 if "%~2"=="" (
