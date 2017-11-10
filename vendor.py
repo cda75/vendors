@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from argparse import ArgumentParser
 from ConfigParser import SafeConfigParser
+from time import sleep
 
 
 
@@ -39,18 +40,20 @@ def login(vendor):
 	driver.find_element_by_xpath(uE).send_keys(user)
 	driver.find_element_by_xpath(pE).send_keys(password)
 	driver.find_element_by_xpath(bE).click()
+	sleep(3)
 	return driver
 
 
 def vendor_action(driver, action):
-	return driver.get(action)
-
+	if action:
+		return driver.get(action)
+	return driver
 
 
 def arg_parse():
 	parser = ArgumentParser(description='CLI for automating Vendor actions')
-	parser.add_argument("--vendor", "-v", type=str, dest='vendor', choices=['hpe','cisco','dell','ibm'], required=True, help='vendor name')
-	parser.add_argument("--action", "-a", type=str, dest='action', choices=['main','spec','cert','deal','rebate','user','status'], default='main', help='type of action')
+	parser.add_argument("--vendor", "-v", type=str, dest='vendor', choices=['hpe','cisco','dell','ibm','apc','netapp','huawei','panduit','se'], required=True, help='vendor name')
+	parser.add_argument("--action", "-a", type=str, dest='action', choices=['spec','cert','deal','rebate','user','status','learn'], default='', help='type of action')
 	args = parser.parse_args()
 	return args.vendor.upper(), args.action
 
@@ -58,7 +61,8 @@ def arg_parse():
 def main():
 	vendor, action = arg_parse()
 	drv = login(vendor)
-	action = get_action(vendor, action)
+	if action:
+		action = get_action(vendor, action)
 	vendor_action(drv, action)
 
 
