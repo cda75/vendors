@@ -1,5 +1,7 @@
 # vendors
 Project for small automation that helps me to work with some IT vendors web sites.
+You should use a geckodriver and have a Mozilla Firefox installed on yor system.
+Download geckodriver from https://github.com/mozilla/geckodriver/releases.
 In order to use it you have to create a file named "user.conf" which contains an auth credentials.
 This file should have the next format: 
 [HPE]
